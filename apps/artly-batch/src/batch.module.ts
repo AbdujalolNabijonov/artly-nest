@@ -9,7 +9,12 @@ import ProductSchema from 'apps/artly-api/src/schemas/Product.model';
 import MemberSchema from 'apps/artly-api/src/schemas/member.model';
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV === 'production'
+          ? '.env.production'
+          : '.env.development',
+    }),
     DatabaseModule,
     ScheduleModule.forRoot(),
     MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
